@@ -26,5 +26,4 @@ public class ArticleController {
         return articleRepository.findAllByOrderByModifiedAtDesc();
     }
 
-
 }
