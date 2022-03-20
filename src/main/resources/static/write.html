@@ -82,40 +82,61 @@
     </style>
     <script>
 
-
-
+        function save_article() {
+            // 1. 작성한 메모를 불러옵니다.
+            let contents = $('#input_contents').val();
+            let name = $('#input_name').val();
+            let title = $('#input_title').val();
+            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+            if (isValidContents(contents) == false) {
+                return;
+            }
+            // 4. 전달할 data JSON으로 만듭니다.
+            let data = {'name': name, 'contents': contents, 'title':title};
+            // 5. POST /api/articles 에 data를 전달합니다.
+            $.ajax({
+                type: "POST",
+                url: "/api/articles",
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function (response) {
+                    alert('등록 완료!');
+                    location.replace("/index.html")
+                }
+            });
+        }
 
     </script>
 </head>
 
-    <body>
-    <div class="mytitle">
-        <h1>항해 블로그 🚢⚓</h1>
+<body>
+<div class="mytitle">
+    <h1>항해 블로그 🚢⚓</h1>
+</div>
+<div class="mypost" id="posting-box">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="input_name" placeholder="url">
+        <label for="floatingInput">작성자</label>
     </div>
-    <div class="mypost" id="posting-box">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="input_name" placeholder="url">
-            <label for="floatingInput">작성자</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="input_title" placeholder="url">
-            <label for="floatingInput">제목</label>
-        </div>
-        <div class="form-floating">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="input_title" placeholder="url">
+        <label for="floatingInput">제목</label>
+    </div>
+    <div class="form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="input_contents"
                           style="height: 70px"></textarea>
-            <label for="floatingTextarea2">내용</label>
-        </div>
-        <div class="mybtns">
-            <button onclick="save_article()" type="button" class="btn btn-dark">기록하기</button>
-            <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
-        </div>
+        <label for="floatingTextarea2">내용</label>
     </div>
+    <div class="mybtns">
+        <button onclick="save_article()" type="button" class="btn btn-dark">기록하기</button>
+        <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+    </div>
+</div>
 
 
-    </div>
+</div>
 
-    </div>
+</div>
 
 </body>
 </html>

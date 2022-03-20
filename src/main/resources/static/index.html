@@ -95,11 +95,11 @@
             show_articles();
         })
 
-        // 메모를 불러와서 보여줍니다.
+        // 게시글 목록 보여주기
         function show_articles() {
             // 1. 기존 메모 내용을 지웁니다.
             $('#board').empty();
-            // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+            // 2. 게시글 목록을 불러와서 HTML로 붙입니다.
             $.ajax({
                 type: 'GET',
                 url: '/api/articles',
@@ -120,14 +120,14 @@
 
         function addHTML(id, name, title, contents, modifiedAt) {
             // 1. HTML 태그를 만듭니다.
-            let tempHtml = `<tr>
+            let tempHtml = `<tr style=" cursor: pointer;" onclick="location.href='/api/articles/${id}';">
                             <th scope="row">${id}</th>
-                            <td>${name}</td>
-                            <td>${title}</td>
-                            <td>${contents}</td>
+                            <td id="${id}-title" >${title}</td>
+                            <td id="${id}-contents" >${contents}</td>
+                            <td id="${id}-name" >${name}</td>
                             <td>${modifiedAt}</td>
                         </tr>`;
-            // 2. #cards-box 에 HTML을 붙인다.
+            // 2. #list 에 HTML을 붙인다.
             console.log(tempHtml)
             $('#list').append(tempHtml);
         }
@@ -155,7 +155,7 @@
             }
             // 4. 전달할 data JSON으로 만듭니다.
             let data = {'name': name, 'contents': contents, 'title':title};
-            // 5. POST /api/memos 에 data를 전달합니다.
+            // 5. POST /api/articles 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
                 url: "/api/articles",
@@ -168,7 +168,22 @@
             });
         }
 
-
+        function detail(id) {
+            let contents = $(`#${id}-contents`).val();
+            let name = $(`#${id}-name`).val();
+            let title = $(`#${id}-title`).val();
+            // 4. 전달할 data JSON으로 만듭니다.
+            let data = {'name': name, 'contents': contents, 'title':title};
+            $.ajax({
+                type:"GET",
+                url: `/api/articles/${id}`,
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+        }
     </script>
 </head>
 
@@ -198,36 +213,34 @@
     </div>
 
     <!-- 게시글 목록 부분-->
-<!--    <div id="board">-->
     <table class="table" >
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">작성자</th>
             <th scope="col">제목</th>
             <th scope="col">내용</th>
+            <th scope="col">작성자</th>
             <th scope="col">작성날짜</th>
         </tr>
         </thead>
         <tbody id="list">
-        <tr>
+        <tr style=" cursor: pointer;" onclick="location.href='/detail?${id}';" >
             <th scope="row">1</th>
-            <td>오예령</td>
             <td>항해 99 14일차 TIL</td>
             <td>순항 중</td>
+            <td>오예령</td>
             <td>2022.03.20</td>
         </tr>
         <tr>
             <th scope="row">2</th>
-            <td>김르탄</td>
             <td>웹서버의 봄, Spring</td>
             <td>하나도 안 쉽다 !!</td>
+            <td>김르탄</td>
             <td>2022.03.20</td>
         </tr>
 
         </tbody>
     </table>
-<!--    </div>-->
 
     </div>
 

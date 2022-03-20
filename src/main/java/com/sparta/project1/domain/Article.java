@@ -34,4 +34,9 @@ public class Article extends Timestamped { // 생성,수정 시간을 자동으�
         this.contents = requestDto.getContents();
     }
 
+    public void update(ArticleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.name = requestDto.getName();
+        this.contents = requestDto.getContents();
+    }
 }
