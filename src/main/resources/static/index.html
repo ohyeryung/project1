@@ -76,7 +76,7 @@
         }
 
         .table {
-            width: 500px;
+            width: 800px;
             margin: 100px auto;
         }
     </style>
@@ -90,40 +90,6 @@
             $('#movie-box').hide()
         }
 
-        function isValidContents(contents) {
-            if (contents == '') {
-                alert('내용을 입력해주세요');
-                return false;
-            }
-            if (contents.trim().length > 140) {
-                alert('공백 포함 140자 이하로 입력해주세요');
-                return false;
-            }
-            return true;
-        }
-
-        function save_contents() {
-            // 1. 작성한 메모를 불러옵니다.
-            let contents = $('#contents').val();
-            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
-            if (isValidContents(contents) == false) {
-                return;
-            }
-            // 4. 전달할 data JSON으로 만듭니다.
-            let data = {'name': name, 'contents': contents, 'title':title};
-            // 5. POST /api/memos 에 data를 전달합니다.
-            $.ajax({
-                type: "POST",
-                url: "/api/articles",
-                contentType: "application/json", // JSON 형식으로 전달함을 알리기
-                data: JSON.stringify(data),
-                success: function (response) {
-                    alert('등록 완료!');
-                    window.location.reload();
-                }
-            });
-        }
-
         $(document).ready(function () {
             // HTML 문서를 로드할 때마다 실행합니다.
             show_articles();
@@ -132,12 +98,13 @@
         // 메모를 불러와서 보여줍니다.
         function show_articles() {
             // 1. 기존 메모 내용을 지웁니다.
-            $('#cards-box').empty();
+            $('#board').empty();
             // 2. 메모 목록을 불러와서 HTML로 붙입니다.
             $.ajax({
                 type: 'GET',
                 url: '/api/articles',
                 success: function (response) {
+                    // console.log(response);
                     for (let i = 0; i < response.length; i++) {
                         let article = response[i];
                         let id = article.id;
@@ -157,11 +124,50 @@
                             <th scope="row">${id}</th>
                             <td>${name}</td>
                             <td>${title}</td>
+                            <td>${contents}</td>
                             <td>${modifiedAt}</td>
                         </tr>`;
             // 2. #cards-box 에 HTML을 붙인다.
-            $('#cards-box').append(tempHtml);
+            console.log(tempHtml)
+            $('#list').append(tempHtml);
         }
+
+        function isValidContents(contents) {
+            if (contents == '') {
+                alert('내용을 입력해주세요');
+                return false;
+            }
+            if (contents.trim().length > 140) {
+                alert('공백 포함 140자 이하로 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+        function save_article() {
+            // 1. 작성한 메모를 불러옵니다.
+            let contents = $('#input_contents').val();
+            let name = $('#input_name').val();
+            let title = $('#input_title').val();
+            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+            if (isValidContents(contents) == false) {
+                return;
+            }
+            // 4. 전달할 data JSON으로 만듭니다.
+            let data = {'name': name, 'contents': contents, 'title':title};
+            // 5. POST /api/memos 에 data를 전달합니다.
+            $.ajax({
+                type: "POST",
+                url: "/api/articles",
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function (response) {
+                    alert('등록 완료!');
+                    window.location.reload();
+                }
+            });
+        }
+
 
     </script>
 </head>
@@ -173,49 +179,55 @@
     </div>
     <div class="mypost" id="movie-box" style="display: block;">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="name" placeholder="url">
+            <input type="text" class="form-control" id="input_name" placeholder="url">
             <label for="floatingInput">작성자</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="title" placeholder="url">
+            <input type="text" class="form-control" id="input_title" placeholder="url">
             <label for="floatingInput">제목</label>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="contents"
+            <textarea class="form-control" placeholder="Leave a comment here" id="input_contents"
                       style="height: 70px"></textarea>
             <label for="floatingTextarea2">내용</label>
         </div>
         <div class="mybtns">
-            <button onclick="save_contents()" type="button" class="btn btn-dark">기록하기</button>
+            <button onclick="save_article()" type="button" class="btn btn-dark">기록하기</button>
             <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
         </div>
     </div>
-<!--    <div id="cards-box" >-->
+
+    <!-- 게시글 목록 부분-->
+<!--    <div id="board">-->
     <table class="table" >
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">작성자</th>
             <th scope="col">제목</th>
+            <th scope="col">내용</th>
             <th scope="col">작성날짜</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="list">
         <tr>
             <th scope="row">1</th>
             <td>오예령</td>
             <td>항해 99 14일차 TIL</td>
+            <td>순항 중</td>
             <td>2022.03.20</td>
         </tr>
         <tr>
             <th scope="row">2</th>
             <td>김르탄</td>
             <td>웹서버의 봄, Spring</td>
+            <td>하나도 안 쉽다 !!</td>
             <td>2022.03.20</td>
         </tr>
 
         </tbody>
     </table>
+<!--    </div>-->
 
     </div>
 
