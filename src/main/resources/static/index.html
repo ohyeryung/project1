@@ -168,22 +168,22 @@
             });
         }
 
-        function detail(id) {
-            let contents = $(`#${id}-contents`).val();
-            let name = $(`#${id}-name`).val();
-            let title = $(`#${id}-title`).val();
-            // 4. 전달할 data JSON으로 만듭니다.
-            let data = {'name': name, 'contents': contents, 'title':title};
-            $.ajax({
-                type:"GET",
-                url: `/api/articles/${id}`,
-                contentType: "application/json", // JSON 형식으로 전달함을 알리기
-                data: JSON.stringify(data),
-                success: function (response) {
-                    console.log(response);
-                }
-            })
-        }
+        // function detail(id) {
+        //     let contents = $(`#${id}-contents`).val();
+        //     let name = $(`#${id}-name`).val();
+        //     let title = $(`#${id}-title`).val();
+        //     // 4. 전달할 data JSON으로 만듭니다.
+        //     let data = {'name': name, 'contents': contents, 'title':title};
+        //     $.ajax({
+        //         type:"GET",
+        //         url: `/api/articles/${id}`,
+        //         contentType: "application/json", // JSON 형식으로 전달함을 알리기
+        //         data: JSON.stringify(data),
+        //         success: function (response) {
+        //             console.log(response);
+        //         }
+        //     })
+        // }
     </script>
 </head>
 
@@ -224,7 +224,7 @@
         </tr>
         </thead>
         <tbody id="list">
-        <tr style=" cursor: pointer;" onclick="location.href='/detail?${id}';" >
+        <tr style=" cursor: pointer;" onclick="location.href='/api/articles/{id}';" >
             <th scope="row">1</th>
             <td>항해 99 14일차 TIL</td>
             <td>순항 중</td>

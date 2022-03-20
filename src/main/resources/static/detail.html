@@ -83,7 +83,22 @@
     <script>
 
 
-
+        function detail(id) {
+            let contents = $(`#${id}-contents`).val();
+            let name = $(`#${id}-name`).val();
+            let title = $(`#${id}-title`).val();
+            // 4. 전달할 data JSON으로 만듭니다.
+            let data = {'name': name, 'contents': contents, 'title':title};
+            $.ajax({
+                type:"GET",
+                url: `/api/articles/${id}`,
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+        }
 
     </script>
 </head>
