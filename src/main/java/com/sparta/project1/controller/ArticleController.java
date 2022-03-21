@@ -31,10 +31,18 @@ public class ArticleController {
         return articleRepository.findAllByOrderByModifiedAtDesc();
     }
 
-    // 상세 페이지로 이동
+//    // 상세 페이지로 이동
+//    @GetMapping("/api/articles/detail{id}")
+//    public Optional<Article> go_detail(@PathVariable Long id) {
+//        return articleRepository.findById(id);
+//    }
+
     @GetMapping("/api/articles/{id}")
-    public Optional<Article> go_detail(@PathVariable Long id) {
-        return articleRepository.findById(id);
+    public Article goDetail(@PathVariable Long id) {
+        Article article = articleRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException()
+        );
+        return article;
     }
 
     @PutMapping("/api/articles/{id}")

@@ -12,14 +12,6 @@ import javax.transaction.Transactional;
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
-//
-////    @Transactional
-//    public static ArticleRequestDto searchById(Long id) {
-//        Article entity = articleRepository.findById(id).orElseThrow(
-//                () -> new IllegalArgumentException("존재하지 않는 글입니다.")
-//        );
-//        return new ArticleRequestDto(entity);
-//    }
 
     @Transactional
     public Long update(Long id, ArticleRequestDto requestDto) {

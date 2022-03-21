@@ -79,6 +79,7 @@
             width: 800px;
             margin: 100px auto;
         }
+
     </style>
     <script>
 
@@ -120,7 +121,7 @@
 
         function addHTML(id, name, title, contents, modifiedAt) {
             // 1. HTML 태그를 만듭니다.
-            let tempHtml = `<tr style=" cursor: pointer;" onclick="location.href='/api/articles/${id}';">
+            let tempHtml = `<tr style=" cursor: pointer;" onclick="detail('${id}')">
                             <th scope="row">${id}</th>
                             <td id="${id}-title" >${title}</td>
                             <td id="${id}-contents" >${contents}</td>
@@ -168,22 +169,9 @@
             });
         }
 
-        // function detail(id) {
-        //     let contents = $(`#${id}-contents`).val();
-        //     let name = $(`#${id}-name`).val();
-        //     let title = $(`#${id}-title`).val();
-        //     // 4. 전달할 data JSON으로 만듭니다.
-        //     let data = {'name': name, 'contents': contents, 'title':title};
-        //     $.ajax({
-        //         type:"GET",
-        //         url: `/api/articles/${id}`,
-        //         contentType: "application/json", // JSON 형식으로 전달함을 알리기
-        //         data: JSON.stringify(data),
-        //         success: function (response) {
-        //             console.log(response);
-        //         }
-        //     })
-        // }
+        function detail(id) {
+            window.location.href = `/api/articles/detail?id=${id}`
+        }
     </script>
 </head>
 
@@ -192,7 +180,7 @@
         <h1>항해 블로그 🚢⚓</h1>
         <button onclick="open_box()">순항 기원하기</button>
     </div>
-    <div class="mypost" id="movie-box" style="display: block;">
+    <div class="mypost" id="movie-box" style="display: none;">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="input_name" placeholder="url">
             <label for="floatingInput">작성자</label>
@@ -224,7 +212,7 @@
         </tr>
         </thead>
         <tbody id="list">
-        <tr style=" cursor: pointer;" onclick="location.href='/api/articles/{id}';" >
+        <tr style=" cursor: pointer;" onclick="detail('${id}')" >
             <th scope="row">1</th>
             <td>항해 99 14일차 TIL</td>
             <td>순항 중</td>
