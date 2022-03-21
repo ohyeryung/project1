@@ -87,18 +87,23 @@
     </style>
 
     <script>
-        function getParameter(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, ""));
-        }
+        // function getParameter(name) {
+        //     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        //     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        //         results = regex.exec(location.search);
+        //     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, ""));
+        // }
+        //
+        // $(document).ready(function () {
+        //     listing()
+        // })
+        //
+        // let id = getParameter("id");
 
-        $(document).ready(function () {
-            listing()
-        })
-
-        let id = getParameter("id");
+        // id 값 불러오기
+        let getLink = window.location.search;
+        let id = decodeURI(getLink.split('=')[1])
+        listing(id);
 
         function listing() {
             $.ajax({
