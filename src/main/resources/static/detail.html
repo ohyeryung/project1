@@ -99,6 +99,7 @@
         })
 
         let id = getParameter("id");
+
         function listing() {
             $.ajax({
                 type: "GET",
@@ -117,6 +118,19 @@
         function back() {
             window.location.href = '/'
         }
+
+        function del(id) {
+            $.ajax({
+                type: "DELETE",
+                url: `/api/articles/${id}`,
+                success: function (response) {
+                    console.log(response)
+                alert('삭제 완료!');
+                window.location.href = '/'
+            }
+            })
+        }
+
     </script>
 
 
@@ -144,6 +158,8 @@
         <p id="input-contents">내용</p>
     </div>
     <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>
+    <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>
+    <button onclick="del('${id}')" class="btn btn-secondary" id="del_btn" >삭제</button>
 </div>
 </body>
 

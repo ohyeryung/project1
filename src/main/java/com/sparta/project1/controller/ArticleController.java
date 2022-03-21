@@ -50,8 +50,8 @@ public class ArticleController {
         return articleService.update(id, requestDto);
     }
 
-    @DeleteMapping("/api/memos/{id}")
-    public Long deleteMemo(@PathVariable Long id) {
+    @DeleteMapping("/api/articles/{id}")
+    public Long deleteArticle(@PathVariable Long id) {
         articleRepository.deleteById(id);
         return id;
     }
