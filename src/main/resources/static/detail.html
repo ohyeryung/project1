@@ -80,10 +80,27 @@
             border-radius: 10px;
         }
 
-        #mybtn {
-            align-content: end;
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 0px auto;
+            box-shadow: 0px 0px 3px 0px gray;
+            padding: 20px;
+
         }
 
+        .mybtns {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 20px;
+        }
+
+        .mybtns > button {
+            margin-right: 10px;
+        }
     </style>
 
     <script>
@@ -105,6 +122,7 @@
         let id = decodeURI(getLink.split('=')[1])
         listing(id);
 
+
         function listing() {
             $.ajax({
                 type: "GET",
@@ -124,7 +142,36 @@
             window.location.href = '/'
         }
 
-        function del(id) {
+        function edit() {
+            $('#post-box').hide();
+            $('#edit-box').show();
+
+        }
+
+        // 메모를 수정합니다.
+        function submit() {
+            // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
+            let name = $('#input-name1').val();
+            let title = $('#input-title1').val();
+            let contents = $('#input_contents1').val();
+            console.log(name, title, contents)
+            // 3. 전달할 data JSON으로 만듭니다.
+            let data = {'name': name, 'contents': contents, 'title':title};
+            // 4. PUT /api/memos/{id} 에 data를 전달합니다.
+            $.ajax({
+                type: "PUT",
+                url: `/api/articles/${id}`,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                    alert('메시지 변경에 성공하였습니다.');
+                    window.location.reload();
+                }
+            });
+        }
+
+        function del() {
             $.ajax({
                 type: "DELETE",
                 url: `/api/articles/${id}`,
@@ -146,7 +193,7 @@
     <h1>항해 블로그 🚢⚓</h1>
     <button onclick="open_box()">순항 기원하기</button>
 </div>
-<div class="wrap">
+<div class="wrap" id="post-box" >
     <div class="form-group">
         <h4 style="display:inline;">제목: <h4  style="display:inline;" id="input-title">제목</h4> </h4>
 
@@ -164,7 +211,26 @@
     </div>
     <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>
     <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>
-    <button onclick="del('${id}')" class="btn btn-secondary" id="del_btn" >삭제</button>
+    <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>
+</div>
+<div class="mypost" id="edit-box" style="display: none;">
+    <div class="form-floating mb-3">
+        <label for="floatingInput">제목</label>
+        <input type="text" class="form-control" id="input_title1" placeholder="제목">
+    </div>
+    <div class="form-floating mb-3">
+        <label for="floatingInput">작성자</label>
+        <input type="text" class="form-control" id="input_name1" placeholder="작성자">
+    </div>
+    <div class="form-floating">
+        <label for="floatingTextarea2">내용</label>
+            <textarea class="form-control" placeholder="내용을 입력해주세요." id="input_contents1"
+                      style="height: 70px"></textarea>
+    </div>
+    <div class="mybtns">
+        <button onclick="back()" class="btn btn-secondary" id="mybtn1" >돌아가기</button>
+        <button onclick="submit()" class="btn btn-secondary" id="edit_btn1" >완료</button>
+    </div>
 </div>
 </body>
 
