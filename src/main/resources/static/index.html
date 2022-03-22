@@ -89,7 +89,7 @@
         }
 
         function close_box() {
-            $('#post-box').hide()
+            window.location.href = "/"
         }
 
         $(document).ready(function () {
@@ -145,6 +145,7 @@
         }
 
         function save_article() {
+
             // 1. 작성한 메모를 불러옵니다.
             let contents = $('#input_contents').val();
             let name = $('#input_name').val();
@@ -195,7 +196,7 @@
         </div>
         <div class="mybtns">
             <button onclick="save_article()" type="button" class="btn btn-dark">기록하기</button>
-            <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+            <button onclick="close_box()" type="button" class="btn btn-outline-dark">목록</button>
         </div>
     </div>
 
