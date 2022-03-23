@@ -129,13 +129,56 @@
                 data: {},
                 success: function (response) {
                     console.log(response)
-                    $('#input-title').text(response['title']);
-                    $('#input-name').text(response['name']);
-                    $('#input-contents').text(response['contents']);
-                    $('#modifiedAt').text(response['modifiedAt']);
+                        let id = response['id'];
+                        let name = response['name'];
+                        let title = response['title'];
+                        let contents = response['contents'];
+                        let modifiedAt = response['modifiedAt'];
+                        addHTML(id, name, title, contents, modifiedAt);
+                        console.log(id,name,title,contents,modifiedAt);
                 }
             });
         }
+
+        function addHTML(id, name, title, contents, modifiedAt) {
+            // 1. HTML 태그를 만듭니다.
+            let tempHtml = `<div class="form-group">
+                                <h4 style="display:inline;">제목: <h4  style="display:inline;" id="input-title">${title}</h4> </h4>
+
+                            </div>
+                            <div class="form-group">
+                                <h5 style="display:inline;">작성자 : <h5 style="display:inline;" id="input-name">${name}</h5></h5>
+
+                            </div>
+                            <div class="form-group">
+                                <h6 style="display:inline;">작성 날짜 :  <h6 style="display:inline;" id="modifiedAt">${modifiedAt}</h6></h6>
+
+                            </div>
+                            <div class="form-group comment-area">
+                                <p id="input-contents">${contents}</p>
+                            </div>
+                            <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>
+                            <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>
+                            <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>`;
+            // 2. #list 에 HTML을 붙인다.
+            console.log(tempHtml)
+            $('#post-box').append(tempHtml);
+        }
+
+        // function listing() {
+        //     $.ajax({
+        //         type: "GET",
+        //         url: `/api/articles/${id}`,
+        //         data: {},
+        //         success: function (response) {
+        //             console.log(response)
+        //             $('#input-title').text(response['title']);
+        //             $('#input-name').text(response['name']);
+        //             $('#input-contents').text(response['contents']);
+        //             $('#modifiedAt').text(response['modifiedAt']);
+        //         }
+        //     });
+        // }
 
         function back() {
             window.location.href = '/'
@@ -193,24 +236,24 @@
     <button onclick="open_box()">순항 기원하기</button>
 </div>
 <div class="wrap" id="post-box" >
-    <div class="form-group">
-        <h4 style="display:inline;">제목: <h4  style="display:inline;" id="input-title">제목</h4> </h4>
+<!--    <div class="form-group">-->
+<!--        <h4 style="display:inline;">제목: <h4  style="display:inline;" id="input-title">제목</h4> </h4>-->
 
-    </div>
-    <div class="form-group">
-        <h5 style="display:inline;">작성자 : <h5 style="display:inline;" id="input-name">작성자</h5></h5>
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <h5 style="display:inline;">작성자 : <h5 style="display:inline;" id="input-name">작성자</h5></h5>-->
 
-    </div>
-    <div class="form-group">
-        <h6 style="display:inline;">작성 날짜 :  <h6 style="display:inline;" id="modifiedAt">작성 날짜</h6></h6>
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <h6 style="display:inline;">작성 날짜 :  <h6 style="display:inline;" id="modifiedAt">작성 날짜</h6></h6>-->
 
-    </div>
-    <div class="form-group comment-area">
-        <p id="input-contents">내용</p>
-    </div>
-    <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>
-    <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>
-    <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>
+<!--    </div>-->
+<!--    <div class="form-group comment-area">-->
+<!--        <p id="input-contents">내용</p>-->
+<!--    </div>-->
+<!--    <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>-->
+<!--    <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>-->
+<!--    <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>-->
 </div>
 <div class="mypost" id="edit-box" style="display: none;">
     <div class="form-floating mb-3">
