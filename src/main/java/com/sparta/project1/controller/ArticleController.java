@@ -7,6 +7,7 @@ import com.sparta.project1.domain.ArticleRequestDto;
 import com.sparta.project1.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,20 @@ public class ArticleController {
 //    public Optional<Article> go_detail(@PathVariable Long id) {
 //        return articleRepository.findById(id);
 //    }
+//
+//    @GetMapping("/api/articles/detail")
+//    public ModelAndView MoveDetail(@RequestParam Long id) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("/detail.html");
+//        modelAndView.addObject("id", id);
+//        return modelAndView;
+//    }
+//
+    @RequestMapping("/api/articles/detail")
+    public ModelAndView detail(@RequestParam("id") Long id) throws Exception {
+            ModelAndView mav = new ModelAndView("/detail.html");
+            return mav;
+    }
 
     @GetMapping("/api/articles/{id}")
     public Article goDetail(@PathVariable Long id) {
