@@ -97,6 +97,31 @@
             show_articles();
         })
 
+        // 게시글 저장하기
+        function save_article() {
+
+            let contents = $('#input_contents').val();
+            let name = $('#input_name').val();
+            let title = $('#input_title').val();
+            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+            if (isValidContents(contents) == false) {
+                return;
+            }
+            // 4. 전달할 data JSON으로 만듭니다.
+            let data = {'name': name, 'contents': contents, 'title':title};
+            // 5. POST /api/articles 에 data를 전달합니다.
+            $.ajax({
+                type: "POST",
+                url: "/api/articles",
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function (response) {
+                    alert('등록 완료!');
+                    window.location.reload();
+                }
+            });
+        }
+
         // 게시글 목록 보여주기
         function show_articles() {
             // 2. 게시글 목록을 불러와서 HTML로 붙입니다.
@@ -144,31 +169,6 @@
             return true;
         }
 
-        function save_article() {
-
-            // 1. 작성한 메모를 불러옵니다.
-            let contents = $('#input_contents').val();
-            let name = $('#input_name').val();
-            let title = $('#input_title').val();
-            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
-            if (isValidContents(contents) == false) {
-                return;
-            }
-            // 4. 전달할 data JSON으로 만듭니다.
-            let data = {'name': name, 'contents': contents, 'title':title};
-            // 5. POST /api/articles 에 data를 전달합니다.
-            $.ajax({
-                type: "POST",
-                url: "/api/articles",
-                contentType: "application/json", // JSON 형식으로 전달함을 알리기
-                data: JSON.stringify(data),
-                success: function (response) {
-                    alert('등록 완료!');
-                    window.location.reload();
-                }
-            });
-        }
-
         function detail(id) {
             window.location.href = `/api/articles/detail?id=${id}`
         }
@@ -212,8 +212,6 @@
         </tr>
         </thead>
         <tbody id="list">
-
-
         </tbody>
     </table>
 
