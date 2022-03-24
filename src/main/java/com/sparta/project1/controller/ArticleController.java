@@ -48,7 +48,7 @@ public class ArticleController {
 //    }
     //  Controller 하나로만 페이지 이동 기능 구현 가능 (ModelAndView)
     @RequestMapping("/api/articles/detail")
-    public ModelAndView detail(@RequestParam("id") Long id) throws Exception {
+    public ModelAndView detail(@RequestParam("id") Long id) {
             ModelAndView mav = new ModelAndView("/detail.html");
             return mav;
     }
