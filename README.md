@@ -5,8 +5,8 @@ Spring 입문 주차 _개인과제
 
  #### API 설계
 
-  | 기능 | Method | URL | 반환 |
-      | --- | --- | --- | --- |
+| 기능 | Method | URL | 반환 |
+| --- | --- | --- | --- |
   | 전체 게시글 조회 | GET | /api/articles | List<Articles> |
   | 게시글 등록 | POST | /api/articles | id, title, name, contents, modifiedAt |
   | 상세 페이지로 이동 | GET | /api/articles/{id} | id값에 맞는 게시글 |
@@ -18,8 +18,8 @@ Spring 입문 주차 _개인과제
 
     1. 전체 게시글 목록 조회 페이지
 
-  | 제목 | 작성자 | 작성 날짜 |
-      | --- | --- | --- |
+| 제목 | 작성자 | 작성 날짜 |
+| --- | --- | --- |
   | ex) 항해 14일차 TIL | 예) 오예령 | 예) 2022. 03. 19 |
   | title | name | modifiedAt |
   | title | name | modifiedAt |
@@ -38,8 +38,8 @@ Spring 입문 주차 _개인과제
 
   글쓰기 (버튼)
 
-  | 제목 | 작성자 | 작성 날짜 |
-      | --- | --- | --- |
+| 제목 | 작성자 | 작성 날짜 |
+| --- | --- | --- |
   | ex) 항해 14일차 TIL | 예) 오예령 | 예) 2022. 03. 19 |
   | 내용 |  |  |
 
