@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta charset="UTF-8">
+
+    <script th:inline="javascript">
+
+        $(document).ready(function () {
+            // HTML 문서를 로드할 때마다 실행합니다.
+            let loggedIn = [[${loggedIn}]]
+            if(loggedIn) {
+                alert([[${message}]])
+                window.location.replace('/')
+            }
+        })
+    </script>
+
+    <title>로그인 페이지</title>
+</head>
+<body>
+<div id="login-form">
+    <div id="login-title">로그인</div>
+    <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'">
+        카카오로 로그인하기
+    </button>
+    <button id="login-id-btn" onclick="location.href='/user/signup'">
+        회원 가입하기
+    </button>
+    <form action="/user/login" method="post">
+        <div class="login-id-label">아이디</div>
+        <input type="text" name="username" class="login-input-box" required>
+
+        <div class="login-id-label">비밀번호</div>
+        <input type="password" name="password" class="login-input-box" required>
+
+        <button id="login-id-submit">로그인</button>
+
+        <div id="login-failed" style="display:none; color: red; font-size: small" class="alert alert-danger" role="alert">닉네임 또는 비밀번호를 확인하세요.</div>
+
+<!--        <button class="submit" style="margin-top: 20px; margin-bottom: 20px" onclick="location.href='/visitor'">Visit</button>-->
+        <div class="input-field" style="margin-top: 100px">
+            <span th:text="${message}"></span>
+        </div>
+
+    </form>
+<!--    <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>-->
+</div>
+</body>
+<script>
+    const href = location.href;
+    const queryString = href.substring(href.indexOf("?")+1)
+    if (queryString === 'error') {
+        const errorDiv = document.getElementById('login-failed');
+        errorDiv.style.display = 'block';
+    }
+</script>
+</html>

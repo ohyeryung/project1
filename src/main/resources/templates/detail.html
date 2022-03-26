@@ -122,20 +122,26 @@
         let id = decodeURI(getLink.split('=')[1])
         listing(id);
 
+        function edit(id) {
+            $('#post-box').hide();
+            $('#edit-box').show();
+
+        }
+
         function listing() {
             $.ajax({
                 type: "GET",
                 url: `/api/articles/${id}`,
                 data: {},
                 success: function (response) {
-                    console.log(response)
+        //             console.log(response)
                         let id = response['id'];
                         let name = response['name'];
                         let title = response['title'];
                         let contents = response['contents'];
                         let modifiedAt = response['modifiedAt'];
                         addHTML(id, name, title, contents, modifiedAt);
-                        console.log(id,name,title,contents,modifiedAt);
+                        // console.log(id,name,title,contents,modifiedAt);
                 }
             });
         }
@@ -158,13 +164,13 @@
                                 <p id="input-contents">${contents}</p>
                             </div>
                             <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>
-                            <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>
-                            <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>`;
+                            <button onclick="edit('${id}')" class="btn btn-secondary" id="edit_btn" >수정</button>
+                            <button onclick="del('${id}')" class="btn btn-secondary" id="del_btn" >삭제</button>`;
             // 2. #list 에 HTML을 붙인다.
             console.log(tempHtml)
             $('#post-box').append(tempHtml);
         }
-
+        //
         // function listing() {
         //     $.ajax({
         //         type: "GET",
@@ -184,11 +190,7 @@
             window.location.href = '/'
         }
 
-        function edit() {
-            $('#post-box').hide();
-            $('#edit-box').show();
 
-        }
 
         // 메모를 수정합니다.
         function submit() {
