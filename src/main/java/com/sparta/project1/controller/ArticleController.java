@@ -1,11 +1,13 @@
 package com.sparta.project1.controller;
 
 
-import com.sparta.project1.domain.Article;
-import com.sparta.project1.domain.ArticleRepository;
-import com.sparta.project1.domain.ArticleRequestDto;
+import com.sparta.project1.model.Article;
+import com.sparta.project1.repository.ArticleRepository;
+import com.sparta.project1.dto.ArticleRequestDto;
+import com.sparta.project1.security.UserDetailsImpl;
 import com.sparta.project1.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,12 +34,17 @@ public class ArticleController {
         return articleRepository.findAllByOrderByModifiedAtDesc();
     }
 
-//    // 상세 페이지로 이동 + HomeController 필요 (HTML로 이동하기 위함)
-//    @GetMapping("/api/articles/detail{id}")
-//    public Optional<Article> go_detail(@PathVariable Long id) {
-//        return articleRepository.findById(id);
-//    }
+        // 상세 페이지로 이동 + HomeController 필요 (HTML로 이동하기 위함)
+    @GetMapping("/api/articles/detail{id}")
+    public Optional<Article> go_detail(@PathVariable Long id) {
+        return articleRepository.findById(id);
+    }
 //
+//    @GetMapping("/api/articles/detail")
+//    public ModelAndView go_detail(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        return articleService.go_detail(id, userDetails);
+//    }
+
     // Controller 하나로만 페이지 이동 기능 구현 가능 (ModelAndView)
 //    @GetMapping("/api/articles/detail")
 //    public ModelAndView MoveDetail(@RequestParam Long id) {
@@ -46,12 +53,12 @@ public class ArticleController {
 //        modelAndView.addObject("id", id);
 //        return modelAndView;
 //    }
-    //  Controller 하나로만 페이지 이동 기능 구현 가능 (ModelAndView)
-    @RequestMapping("/api/articles/detail")
-    public ModelAndView detail(@RequestParam("id") Long id) {
-            ModelAndView mav = new ModelAndView("/detail.html");
-            return mav;
-    }
+//    //  Controller 하나로만 페이지 이동 기능 구현 가능 (ModelAndView)
+//    @RequestMapping("/api/articles/detail")
+//    public ModelAndView detail(@RequestParam("id") Long id) {
+//            ModelAndView mav = new ModelAndView("/detail.html");
+//            return mav;
+//    }
 
     @GetMapping("/api/articles/{id}")
     public Article goDetail(@PathVariable Long id) {
@@ -62,7 +69,7 @@ public class ArticleController {
     }
 
     @PutMapping("/api/articles/{id}")
-    public Long updateArticle(@PathVariable Long id, @RequestBody ArticleRequestDto requestDto){
+    public Long updateArticle(@PathVariable Long id, @RequestBody ArticleRequestDto requestDto) {
         return articleService.update(id, requestDto);
     }
 

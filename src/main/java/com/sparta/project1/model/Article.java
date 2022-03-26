@@ -1,4 +1,6 @@
-package com.sparta.project1.domain;
+package com.sparta.project1.model;
+
+import com.sparta.project1.dto.ArticleRequestDto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

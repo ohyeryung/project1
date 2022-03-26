@@ -1,4 +1,4 @@
-package com.sparta.project1.domain;
+package com.sparta.project1.security;
 
 import com.fasterxml.jackson.core.SerializableString;
 import com.fasterxml.jackson.core.io.CharacterEscapes;

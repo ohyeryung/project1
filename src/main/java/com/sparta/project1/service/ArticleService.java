@@ -1,8 +1,8 @@
 package com.sparta.project1.service;
 
-import com.sparta.project1.domain.Article;
-import com.sparta.project1.domain.ArticleRepository;
-import com.sparta.project1.domain.ArticleRequestDto;
+import com.sparta.project1.model.Article;
+import com.sparta.project1.repository.ArticleRepository;
+import com.sparta.project1.dto.ArticleRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

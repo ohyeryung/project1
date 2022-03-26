@@ -1,4 +1,4 @@
-package com.sparta.project1.domain;
+package com.sparta.project1.dto;
 
 import lombok.Getter;
 
