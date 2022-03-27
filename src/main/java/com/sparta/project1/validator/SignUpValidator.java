@@ -25,7 +25,7 @@ public class SignUpValidator {
             return validatorResult.get("message");
         } else if(checkUsernameDuplicate(requestDto.getUsername())) {
             return "이미 사용중인 아이디입니다.";
-        } else if(!requestDto.getPassword().equals(requestDto.getPassword())) {
+        } else if(!requestDto.getPassword().equals(requestDto.getPassword_check())) {
             return "비밀번호가 일치하지 않습니다";
         } else if(requestDto.getUsername().contains(requestDto.getPassword())) {
             return "비밀번호는 닉네임을 포함할 수 없습니다.";
