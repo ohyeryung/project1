@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <meta charset="UTF-8">
     <title>회원가입 페이지</title>
@@ -22,6 +22,7 @@
                 window.location.replace('/')
             }
         })
+
   
         // function onclickAdmin() {
         //     // Get the checkbox
@@ -37,31 +38,6 @@
         //     }
         // }
 
-
-        // function valid() {
-        //     let username = $('#username').val();
-        //     let password = $('#password').val();
-        //     let password_check = $('#password_check').val();
-        //     console.log(username,password,password_check);
-        //
-        //     if (username == null) {
-        //         alert("닉네임을 입력해주세요.")
-        //     } else if (!/^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/.test(username)) {
-        //         alert("닉네임은 영어와 숫자를 포함한 3자 이상 입력해주세요.")
-        //     }
-        //     if (password == null) {
-        //         alert("비밀번호를 입력해주세요.")
-        //     } else if (password.length < 4) {
-        //         alert("비밀번호는 4자 이상 입력해주세요.")
-        //     }
-        //
-        //     if (password != password_check) {
-        //         alert("비밀번호가 일치하지 않습니다.")
-        //     } else {
-        //         return location.href ="/login.html"
-        //     }
-        //
-        // }
     </script>
 
 
@@ -69,21 +45,26 @@
 </head>
 <body>
 <div id="login-form">
-    <div id="login-title">회원가입</div>
-
+    <a href="/" >
+        <div id="signup-title">Sign up
+            <br>
+            <br>
+            <span>항해블로그</span>
+        </div>
+    </a>
     <form action="/user/signup" method="post">
         <div class="login-id-label">Username</div>
-        <input type="text" name="username" placeholder="Username" class="login-input-box" id="username" >
+        <input type="text" name="username" placeholder="username" class="login-input-box" id="username" >
 
         <div class="login-id-label">Password</div>
-        <input type="password" name="password" class="login-input-box" id="password" >
+        <input type="password" name="password" placeholder="password" class="login-input-box" id="password" >
 
-        <div class="login-id-label">Password</div>
-        <input type="password" name="password_check" class="login-input-box" id="password_check" >
+        <div class="login-id-label">Password check</div>
+        <input type="password" name="password_check" placeholder="password_check" class="login-input-box" id="password_check" >
 
-        <button id="login-id-submit">회원 가입</button>
-        <div class="input-field" style="margin-top: 100px">-->
-         <!--/*@thymesVar id="message" type=""*/-->
+        <button id="login-id-submit" >회원 가입</button>
+
+        <div class="input-field" style="margin-top: 50px; color:red;">
          <span th:text="${message}"></span>
          </div>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
@@ -100,6 +100,11 @@
 
         .mybtns > button {
             margin-right: 10px;
+        }
+
+        #comment_box {
+            width: 700px;
+            margin: auto;
         }
     </style>
 
@@ -227,6 +232,13 @@
             })
         }
 
+        function showComment() {
+            let comment = $('#comment').val();
+            if(comment == null) {
+                alert("내용을 입력해주세요!")
+            }
+        }
+
     </script>
 
 
@@ -276,6 +288,29 @@
         <button onclick="submit()" class="btn btn-secondary" id="edit_btn1" >완료</button>
     </div>
 </div>
+
+<div id="comment_box">
+    <div id="c_box" class="form-floating mb-3">
+        <span style="display: inline-block;" th:text="${username}"></span> 님
+        <textarea id="comment" class="form-control" placeholder="댓글을 입력해주세요!"></textarea>
+
+        <button id="commentBtn" type="button"  class="btn btn-outline-dark" onclick="showComment(decodeURI(window.location.search.split('=')[1]))">입력</button>
+
+    </div> <!--c_box-->
+    <div id="ment_box" class="clearFix">
+        <div id="ment_list" class="clearFix">
+            <div class="mentlistli">
+            <p id="nickname" class="nickname">예령</p>
+            <p class="comment_r">재미있어요 !</p>
+            <button type="button" class="btn btn-outline-danger change">수정</button>
+        </div>
+
+
+        </div>  <!--ment_list-->
+    </div> <!--ment_box-->
+
+</div>
+
 </body>
 
 </html>

@@ -184,26 +184,26 @@
 
 <body>
 <div class="navigation" >
-    <span style="display: inline-block;" th:text="${username}"></span> 님
-    <button style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary" id="login_btn" >로그인</button>
-    <button style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary" id="logout_btn" >로그아웃</button>
+    <span style="display: inline-block;" th:text="${username}"></span> 님 환영합니다 🙌
+    <button style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary btn-sm" id="login_btn" >로그인</button>
+    <button style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary btn-sm" id="logout_btn" >로그아웃</button>
 
 </div>
     <div class="mytitle">
         <h1>항해 블로그 🚢⚓</h1>
-        <button onclick="open_box()">순항 기원하기</button>
+        <button onclick="open_box()">글 작성하기</button>
     </div>
     <div class="mypost" id="post-box" style="display: none;">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="input_name" placeholder="url">
+            <input type="text" class="form-control" id="input_name" placeholder="작성자">
             <label for="floatingInput">작성자</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="input_title" placeholder="url">
+            <input type="text" class="form-control" id="input_title" placeholder="제목">
             <label for="floatingInput">제목</label>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="input_contents"
+            <textarea class="form-control" placeholder="내용" id="input_contents"
                       style="height: 70px"></textarea>
             <label for="floatingTextarea2">내용</label>
         </div>
