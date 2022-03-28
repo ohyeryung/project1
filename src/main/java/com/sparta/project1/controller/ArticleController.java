@@ -23,7 +23,8 @@ public class ArticleController {
 
     //게시글 저장하기
     @PostMapping("/api/articles")
-    public Article createarticles(@RequestBody ArticleRequestDto requestDto) {
+    public Article createarticles(@RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        requestDto.setName(userDetails.getUsername());
         Article article = new Article(requestDto);
         return articleRepository.save(article);
     }
@@ -39,6 +40,29 @@ public class ArticleController {
     public Optional<Article> go_detail(@PathVariable Long id) {
         return articleRepository.findById(id);
     }
+
+    @GetMapping("/api/articles/{id}")
+    public Article goDetail(@PathVariable Long id) {
+        Article article = articleRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException()
+        );
+        return article;
+    }
+
+    // 게시글 수정하기
+    @PutMapping("/api/articles/{id}")
+    public Long updateArticle(@PathVariable Long id, @RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        requestDto.setName(userDetails.getUsername());
+        return articleService.update(id, requestDto);
+    }
+
+    // 게시글 삭제하기
+    @DeleteMapping("/api/articles/{id}")
+    public Long deleteArticle(@PathVariable Long id) {
+        articleRepository.deleteById(id);
+        return id;
+    }
+
 //
 //    @GetMapping("/api/articles/detail")
 //    public ModelAndView go_detail(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -59,25 +83,4 @@ public class ArticleController {
 //            ModelAndView mav = new ModelAndView("/detail.html");
 //            return mav;
 //    }
-
-    @GetMapping("/api/articles/{id}")
-    public Article goDetail(@PathVariable Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException()
-        );
-        return article;
-    }
-
-    @PutMapping("/api/articles/{id}")
-    public Long updateArticle(@PathVariable Long id, @RequestBody ArticleRequestDto requestDto) {
-        return articleService.update(id, requestDto);
-    }
-
-    @DeleteMapping("/api/articles/{id}")
-    public Long deleteArticle(@PathVariable Long id) {
-        articleRepository.deleteById(id);
-        return id;
-    }
-
-
 }
