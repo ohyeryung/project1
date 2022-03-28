@@ -21,4 +21,6 @@ public class UserRequestDto {
 
     private String password_check;
 
+    private String email;
+
 }
