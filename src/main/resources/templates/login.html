@@ -10,54 +10,43 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <meta charset="UTF-8">
 
-    <script th:inline="javascript">
-
-        $(document).ready(function () {
-            // HTML 문서를 로드할 때마다 실행합니다.
-            let loggedIn = [[${loggedIn}]]
-            if(loggedIn) {
-                alert([[${message}]])
-                window.location.replace('/')
-            }
-        })
+    <script>
     </script>
 
     <title>로그인 페이지</title>
 </head>
 <body>
-<div id="login-form">
-    <a href="/" >
-        <div id="login-title" >Log in
-            <br>
-            <br>
-            <span>항해블로그</span>
-        </div>
-    </a>
-    <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'" style="cursor:pointer;">
-        카카오로 로그인하기
-    </button>
-    <button id="login-id-btn" onclick="location.href='/user/signup'" style="cursor:pointer;" >
-        회원 가입하기
-    </button>
-    <form action="/user/login" method="post">
-        <div class="login-id-label">Username</div>
-        <input type="text" name="username" placeholder="Username" class="login-input-box" required>
+    <div id="login-form">
+        <a href="/" >
+            <div id="login-title" >Log in
+                <br>
+                <br>
+                <span>항해블로그</span>
+            </div>
+        </a>
+        <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=7e0438e611271f9ad5a6a62b3fa7463b&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'" style="cursor:pointer;">
+            카카오로 로그인하기
+        </button>
+        <button id="login-id-btn" onclick="location.href='/user/signup'" style="cursor:pointer;" >
+            회원 가입하기
+        </button>
+        <form action="/user/login" method="post">
+            <div class="login-id-label">Username</div>
+            <input type="text" name="username" placeholder="Username" class="login-input-box" required>
 
-        <div class="login-id-label">Password</div>
-        <input type="password" name="password" placeholder="Password" class="login-input-box" required>
+            <div class="login-id-label">Password</div>
+            <input type="password" name="password" placeholder="Password" class="login-input-box" required>
 
-        <button id="login-id-submit">로그인</button>
+            <button id="login-id-submit">로그인</button>
 
-        <div id="login-failed" style="display:none; color: red; font-size: small" class="alert alert-danger" role="alert">아이디 또는 비밀번호를 확인하세요.</div>
+            <div id="login-failed" style="display:none; color: red; font-size: medium" class="alert alert-danger" role="alert">아이디 또는 비밀번호를 확인하세요.</div>
 
-<!--        <button class="submit" style="margin-top: 20px; margin-bottom: 20px" onclick="location.href='/visitor'">Visit</button>-->
-        <div class="input-field" style="margin-top: 100px">
-            <span th:text="${message}"></span>
-        </div>
+    <!--        <button class="submit" style="margin-top: 20px; margin-bottom: 20px" onclick="location.href='/visitor'">Visit</button>-->
 
-    </form>
-<!--    <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>-->
-</div>
+
+        </form>
+
+    </div>
 </body>
 <script>
     const href = location.href;

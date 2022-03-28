@@ -25,7 +25,7 @@ public class SignUpValidator {
             return validatorResult.get("message");
         } else if(checkUsernameDuplicate(requestDto.getUsername())) {
             return "이미 사용중인 아이디입니다.";
-        } else if(!requestDto.getPassword().equals(requestDto.getPassword_check())) {
+        }  else if(!requestDto.getPassword().equals(requestDto.getPassword_check())) {
             return "비밀번호가 일치하지 않습니다";
         } else if(requestDto.getUsername().contains(requestDto.getPassword())) {
             return "비밀번호는 닉네임을 포함할 수 없습니다.";
@@ -44,23 +44,14 @@ public class SignUpValidator {
         return validatorResult;
     }
 
+    //이메일주소 중복 체크
+    public boolean checkEmailDuplicate(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     //닉네임 중복 체크
     public boolean checkUsernameDuplicate(String username) {
         return userRepository.existsByUsername(username);
     }
 
-//    public String getValidMessageForTest(UserRequestDto requestDto) {
-//        if (!Pattern.matches("^[A-Za-z0-9]{3,}", requestDto.getUsername())) {
-//            return "닉네임을 확인하세요.";
-//        } else if (!Pattern.matches("^[A-Za-z0-9]{4,}", requestDto.getPassword())){
-//            return "비밀번호를 확인하세요.";
-//        } else if(checkNicknameDuplicate(requestDto.getUsername())) {
-//            return "이미 사용중인 아이디입니다.";
-//        } else if(!requestDto.getPassword().equals(requestDto.getPassword())) {
-//            return "비밀번호가 일치하지 않습니다.";
-//        } else if(requestDto.getPassword().contains(requestDto.getPassword_check())) {
-//            return "비밀번호는 닉네임을 포함할 수 없습니다.";
-//        } else
-//            return "회원가입 성공";
-//    }
 }

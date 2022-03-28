@@ -40,35 +40,36 @@
 
     </script>
 
-
-
 </head>
 <body>
-<div id="login-form">
-    <a href="/" >
-        <div id="signup-title">Sign up
-            <br>
-            <br>
-            <span>항해블로그</span>
-        </div>
-    </a>
-    <form action="/user/signup" method="post">
-        <div class="login-id-label">Username</div>
-        <input type="text" name="username" placeholder="username" class="login-input-box" id="username" >
+    <div id="login-form">
+        <a href="/" >
+            <div id="signup-title">Sign up
+                <br>
+                <br>
+                <span>항해블로그</span>
+            </div>
+        </a>
+        <form class="signup_form" action="/user/signup" method="post">
+            <div class="login-id-label">Username</div>
+            <input type="text" name="username" placeholder="username" class="login-input-box" id="username" >
 
-        <div class="login-id-label">Password</div>
-        <input type="password" name="password" placeholder="password" class="login-input-box" id="password" >
+            <div class="login-id-label">Password</div>
+            <input type="password" name="password" placeholder="password" class="login-input-box" id="password" >
 
-        <div class="login-id-label">Password check</div>
-        <input type="password" name="password_check" placeholder="password_check" class="login-input-box" id="password_check" >
+            <div class="login-id-label">Password check</div>
+            <input type="password" name="password_check" placeholder="password check" class="login-input-box" id="password_check" >
 
-        <button id="login-id-submit" >회원 가입</button>
+            <div class="login-id-label" style="display: none" >E-mail</div>
+            <input type="email" name="email" placeholder="email" class="login-input-box" id="email" style="display: none" >
 
-        <div class="input-field" style="margin-top: 50px; color:red;">
-         <span th:text="${message}"></span>
-         </div>
+            <button id="login-id-submit" >회원 가입</button>
 
-    </form>
-</div>
+            <div class="input-field" style="margin-top: 30px; color:red;">
+             <span th:text="${message}"></span>
+             </div>
+
+        </form>
+    </div>
 </body>
 </html>
