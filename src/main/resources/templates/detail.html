@@ -172,7 +172,7 @@
                             <button onclick="edit('${id}')" class="btn btn-secondary" id="edit_btn" >수정</button>
                             <button onclick="del('${id}')" class="btn btn-secondary" id="del_btn" >삭제</button>`;
             // 2. #list 에 HTML을 붙인다.
-            console.log(tempHtml)
+            // console.log(tempHtml)
             $('#post-box').append(tempHtml);
         }
         //
@@ -192,21 +192,21 @@
         // }
 
         function back() {
-            window.location.href = '/'
+            window.location.href = "/"
         }
-
 
 
         // 메모를 수정합니다.
         function submit() {
             // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
-            let name = $('#input-name1').val();
-            let title = $('#input-title1').val();
+            // let name = $('#input_name1').val();
+            let title = $('#input_title1').val();
             let contents = $('#input_contents1').val();
-            console.log(name, title, contents)
+
             // 3. 전달할 data JSON으로 만듭니다.
-            let data = {'name': name, 'contents': contents, 'title':title};
+            let data = {'contents': contents, 'title':title};
             // 4. PUT /api/memos/{id} 에 data를 전달합니다.
+            console.log(data)
             $.ajax({
                 type: "PUT",
                 url: `/api/articles/${id}`,
@@ -232,11 +232,21 @@
             })
         }
 
-        function showComment() {
+        function writeComment() {
             let comment = $('#comment').val();
-            if(comment == null) {
+            if(comment == '') {
                 alert("내용을 입력해주세요!")
             }
+            $.ajax({
+                type: "POST",
+                url: "/api/comments",
+                data: {'comment':comment},
+                success: function (){
+                    alert("등록 완료!")
+                    window.location.reload();
+                }
+            }); // $.ajax
+
         }
 
     </script>
@@ -245,71 +255,62 @@
 </head>
 
 <body>
-<div class="mytitle" >
-    <h1>항해 블로그 🚢⚓</h1>
-    <button onclick="open_box()">순항 기원하기</button>
-</div>
-<div class="wrap" id="post-box" >
-<!--    <div class="form-group">-->
-<!--        <h4 style="display:inline;">제목: <h4  style="display:inline;" id="input-title">제목</h4> </h4>-->
-
-<!--    </div>-->
-<!--    <div class="form-group">-->
-<!--        <h5 style="display:inline;">작성자 : <h5 style="display:inline;" id="input-name">작성자</h5></h5>-->
-
-<!--    </div>-->
-<!--    <div class="form-group">-->
-<!--        <h6 style="display:inline;">작성 날짜 :  <h6 style="display:inline;" id="modifiedAt">작성 날짜</h6></h6>-->
-
-<!--    </div>-->
-<!--    <div class="form-group comment-area">-->
-<!--        <p id="input-contents">내용</p>-->
-<!--    </div>-->
-<!--    <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>-->
-<!--    <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>-->
-<!--    <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>-->
-</div>
-<div class="mypost" id="edit-box" style="display: none;">
-    <div class="form-floating mb-3">
-        <label for="floatingInput">제목</label>
-        <input type="text" class="form-control" id="input_title1" placeholder="제목">
+    <div class="mytitle" >
+        <h1>항해 블로그 🚢⚓</h1>
+        <button onclick="open_box()">순항 기원하기</button>
     </div>
-    <div class="form-floating mb-3">
-        <label for="floatingInput">작성자</label>
-        <input type="text" class="form-control" id="input_name1" placeholder="작성자">
-    </div>
-    <div class="form-floating">
-        <label for="floatingTextarea2">내용</label>
-            <textarea class="form-control" placeholder="내용을 입력해주세요." id="input_contents1"
-                      style="height: 70px"></textarea>
-    </div>
-    <div class="mybtns">
-        <button onclick="back()" class="btn btn-secondary" id="mybtn1" >돌아가기</button>
-        <button onclick="submit()" class="btn btn-secondary" id="edit_btn1" >완료</button>
-    </div>
-</div>
+    <div class="wrap" id="post-box" >
+    <!--    <div class="form-group">-->
+    <!--        <h4 style="display:inline;">제목: <h4  style="display:inline;" id="input-title">제목</h4> </h4>-->
 
-<div id="comment_box">
-    <div id="c_box" class="form-floating mb-3">
-        <span style="display: inline-block;" th:text="${username}"></span> 님
-        <textarea id="comment" class="form-control" placeholder="댓글을 입력해주세요!"></textarea>
+    <!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--        <h5 style="display:inline;">작성자 : <h5 style="display:inline;" id="input-name">작성자</h5></h5>-->
 
-        <button id="commentBtn" type="button"  class="btn btn-outline-dark" onclick="showComment(decodeURI(window.location.search.split('=')[1]))">입력</button>
+    <!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--        <h6 style="display:inline;">작성 날짜 :  <h6 style="display:inline;" id="modifiedAt">작성 날짜</h6></h6>-->
 
-    </div> <!--c_box-->
-    <div id="ment_box" class="clearFix">
-        <div id="ment_list" class="clearFix">
-            <div class="mentlistli">
-            <p id="nickname" class="nickname">예령</p>
-            <p class="comment_r">재미있어요 !</p>
-            <button type="button" class="btn btn-outline-danger change">수정</button>
+    <!--    </div>-->
+    <!--    <div class="form-group comment-area">-->
+    <!--        <p id="input-contents">내용</p>-->
+    <!--    </div>-->
+    <!--    <button onclick="back()" class="btn btn-secondary" id="mybtn" >돌아가기</button>-->
+    <!--    <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>-->
+    <!--    <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>-->
+    </div>
+    <div class="mypost" id="edit-box" style="display: none;">
+        <div class="form-floating mb-3">
+            <label for="floatingInput">제목</label>
+            <input type="text" class="form-control" id="input_title1" placeholder="제목">
         </div>
+<!--        <div class="form-floating mb-3">-->
+<!--            <label for="floatingInput">작성자</label>-->
+<!--            <input type="text" class="form-control" id="input_name1" placeholder="작성자">-->
+<!--        </div>-->
+        <div class="form-floating">
+            <label for="floatingTextarea2">내용</label>
+                <textarea class="form-control" placeholder="내용을 입력해주세요." id="input_contents1"
+                          style="height: 70px"></textarea>
+        </div>
+        <div class="mybtns">
+            <button onclick="submit()" class="btn btn-secondary" id="edit_btn1" >완료</button>
+            <button onclick="back()" class="btn btn-secondary" id="mybtn1" >돌아가기</button>
+        </div>
+    </div>
+
+    <div id="comment_box">
+        <div id="c_box" class="form-floating mb-3">
+    <!--        <span style="display: inline-block;" th:text="${username}"></span> 님-->
+            <textarea id="comment" class="form-control" placeholder="댓글을 입력해주세요!"></textarea>
+            <button onclick="writeComment()" id="commentBtn" class="btn btn-secondary" >입력</button>
+
+        </div> <!--c_box-->
 
 
-        </div>  <!--ment_list-->
     </div> <!--ment_box-->
 
-</div>
+    </div>
 
 </body>
 

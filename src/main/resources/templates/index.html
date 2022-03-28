@@ -108,14 +108,14 @@
         function save_article() {
 
             let contents = $('#input_contents').val();
-            let name = $('#input_name').val();
+            // let name = $('#input_name').val();
             let title = $('#input_title').val();
             // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
             if (isValidContents(contents) == false) {
                 return;
             }
             // 4. 전달할 data JSON으로 만듭니다.
-            let data = {'name': name, 'contents': contents, 'title':title};
+            let data = {'contents': contents, 'title':title};
             // 5. POST /api/articles 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
@@ -186,7 +186,7 @@
 <div class="navigation" >
     <span style="display: inline-block;" th:text="${username}"></span> 님 환영합니다 🙌
     <button style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary btn-sm" id="login_btn" >로그인</button>
-    <button style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary btn-sm" id="logout_btn" >로그아웃</button>
+    <button style="display: inline-block;" onclick="window.location.href = '/user/logout'"() class="btn btn-secondary btn-sm" id="logout_btn" >로그아웃</button>
 
 </div>
     <div class="mytitle">
@@ -194,10 +194,10 @@
         <button onclick="open_box()">글 작성하기</button>
     </div>
     <div class="mypost" id="post-box" style="display: none;">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="input_name" placeholder="작성자">
-            <label for="floatingInput">작성자</label>
-        </div>
+<!--        <div class="form-floating mb-3">-->
+<!--            <input type="text" class="form-control" id="input_name" placeholder="작성자">-->
+<!--            <label for="floatingInput">작성자</label>-->
+<!--        </div>-->
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="input_title" placeholder="제목">
             <label for="floatingInput">제목</label>
