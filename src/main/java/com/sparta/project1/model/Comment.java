@@ -3,10 +3,12 @@ package com.sparta.project1.model;
 import com.sparta.project1.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
+@Setter
 @Getter
 @Entity
 public class Comment extends Timestamped{
@@ -27,5 +29,11 @@ public class Comment extends Timestamped{
         this.content = requestDto.getContent();
         this.writer = requestDto.getWriter();
         this.articleId = requestDto.getArticleId();
+    }
+
+    public void update(CommentRequestDto requestDto) {
+        this.articleId = requestDto.getArticleId();
+        this.writer = requestDto.getWriter();
+        this.content = requestDto.getContent();
     }
 }
