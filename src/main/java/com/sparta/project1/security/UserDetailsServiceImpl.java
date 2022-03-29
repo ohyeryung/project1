@@ -1,5 +1,4 @@
-package com.sparta.project1.security;
-
+import com.sparta.project1.security.UserDetailsImpl;
 import com.sparta.project1.model.User;
 import com.sparta.project1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -139,14 +139,12 @@
                 url: `/api/articles/${id}`,
                 data: {},
                 success: function (response) {
-        //             console.log(response)
                         let id = response['id'];
                         let name = response['name'];
                         let title = response['title'];
                         let contents = response['contents'];
                         let modifiedAt = response['modifiedAt'];
                         addHTML(id, name, title, contents, modifiedAt);
-                        // console.log(id,name,title,contents,modifiedAt);
                 }
             });
         }
@@ -196,7 +194,7 @@
         }
 
 
-        // 메모를 수정합니다.
+        // 게시글 수정
         function submit() {
             // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
             // let name = $('#input_name1').val();
@@ -220,6 +218,7 @@
             });
         }
 
+        // 게시글 삭제
         function del() {
             $.ajax({
                 type: "DELETE",
@@ -232,20 +231,23 @@
             })
         }
 
+        // 댓글 등록
         function writeComment() {
-            let comment = $('#comment').val();
-            if(comment == '') {
-                alert("내용을 입력해주세요!")
-            }
+            let content = $('#content').val();
+
             $.ajax({
                 type: "POST",
-                url: "/api/comments",
-                data: {'comment':comment},
+                url: "/api/articles/{id}/comments",
+                data: {'content':content},
                 success: function (){
                     alert("등록 완료!")
                     window.location.reload();
                 }
             }); // $.ajax
+
+        }
+
+        function showComment() {
 
         }
 
@@ -257,8 +259,10 @@
 <body>
     <div class="mytitle" >
         <h1>항해 블로그 🚢⚓</h1>
-        <button onclick="open_box()">순항 기원하기</button>
+        <button >순항 기원하기</button>
     </div>
+
+    <!--게시글 보여주기-->
     <div class="wrap" id="post-box" >
     <!--    <div class="form-group">-->
     <!--        <h4 style="display:inline;">제목: <h4  style="display:inline;" id="input-title">제목</h4> </h4>-->
@@ -279,6 +283,8 @@
     <!--    <button onclick="edit()" class="btn btn-secondary" id="edit_btn" >수정</button>-->
     <!--    <button onclick="del()" class="btn btn-secondary" id="del_btn" >삭제</button>-->
     </div>
+
+    <!--게시글 수정-->
     <div class="mypost" id="edit-box" style="display: none;">
         <div class="form-floating mb-3">
             <label for="floatingInput">제목</label>
@@ -299,18 +305,14 @@
         </div>
     </div>
 
+    <!--댓글 목록-->
     <div id="comment_box">
-        <div id="c_box" class="form-floating mb-3">
+        <div id="c_box" action="/api/articles/{id}/comments" method="post" autocomplete="off" class="form-floating mb-3">
     <!--        <span style="display: inline-block;" th:text="${username}"></span> 님-->
-            <textarea id="comment" class="form-control" placeholder="댓글을 입력해주세요!"></textarea>
+            <textarea id="content" class="form-control" placeholder="댓글을 입력해주세요!"></textarea>
             <button onclick="writeComment()" id="commentBtn" class="btn btn-secondary" >입력</button>
-
-        </div> <!--c_box-->
-
-
+        </div><!--c_box-->
     </div> <!--ment_box-->
-
-    </div>
 
 </body>
 

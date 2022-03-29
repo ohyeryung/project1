@@ -31,7 +31,7 @@ public class SignUpValidator {
             return "비밀번호는 닉네임을 포함할 수 없습니다.";
         } else
             return "회원가입 성공";
-    }
+        }
 
     // 회원가입 시, 유효성 체크
     public Map<String, String> validateHandling(Errors errors) {

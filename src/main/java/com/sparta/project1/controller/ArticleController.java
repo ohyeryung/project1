@@ -35,18 +35,13 @@ public class ArticleController {
         return articleRepository.findAllByOrderByModifiedAtDesc();
     }
 
-        // 상세 페이지로 이동 + HomeController 필요 (HTML로 이동하기 위함)
-    @GetMapping("/api/articles/detail{id}")
-    public Optional<Article> go_detail(@PathVariable Long id) {
-        return articleRepository.findById(id);
-    }
 
+    // 상세 페이지
     @GetMapping("/api/articles/{id}")
     public Article goDetail(@PathVariable Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(
+        return articleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException()
         );
-        return article;
     }
 
     // 게시글 수정하기

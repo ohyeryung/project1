@@ -16,8 +16,8 @@ public class ArticleService {
     @Transactional
     public Long update(Long id, ArticleRequestDto requestDto) {
         Article article = articleRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 글입니다.")
-        );
+                () -> new NullPointerException("존재하지 않는 글입니다."));
+
         article.update(requestDto);
         return article.getId();
     }

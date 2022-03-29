@@ -6,7 +6,6 @@ import com.sparta.project1.security.UserDetailsImpl;
 import com.sparta.project1.service.UserService;
 import com.sparta.project1.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,19 +23,23 @@ public class UserController {
     private final SignUpValidator signUpValidator;
     private final UserService userService;
 
-//    @Autowired
-//    public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
 
     // 회원 로그인 페이지
     @GetMapping("/user/login")
     public String login(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-        if (userDetails != null) {
+        System.out.println("1");
+
+
+        if (!userDetails.equals(null)) {
+            System.out.println("2");
             model.addAttribute("loggedIn", true);
+            System.out.println("3");
             model.addAttribute("message", "이미 로그인 하셨습니다.");
+            System.out.println("4");
         } else
+            System.out.println("5");
             model.addAttribute("loggedIn", false);
+        System.out.println("6");
         return "login";
 
     }
