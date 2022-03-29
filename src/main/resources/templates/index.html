@@ -185,8 +185,9 @@
 <body>
 <div class="navigation" >
     <span style="display: inline-block;" th:text="${username}"></span> 님 환영합니다 🙌
-    <button style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary btn-sm" id="login_btn" >로그인</button>
-    <button style="display: inline-block;" onclick="window.location.href = '/user/logout'"() class="btn btn-secondary btn-sm" id="logout_btn" >로그아웃</button>
+    <button th:if="${#strings.isEmpty(username)}" style="display: inline-block;" onclick="window.location.href = '/user/login'"() class="btn btn-secondary btn-sm" id="login_btn" >로그인</button>
+    <button th:if="${#strings.isEmpty(username)}" style="display: inline-block;" onclick="window.location.href = '/user/signup'"() class="btn btn-secondary btn-sm" id="signup_btn" >회원가입</button>
+    <button th:if="${not #strings.isEmpty(username)}" style="display: inline-block;" onclick="window.location.href = '/user/logout'"() class="btn btn-secondary btn-sm" id="logout_btn" >로그아웃</button>
 
 </div>
     <div class="mytitle">
