@@ -22,12 +22,5 @@ public class HomeController {
     public String detail() {
         return "/detail.html";
     }
-
-//    @GetMapping("/visitor")
-//    public String visitorPass(Model model) {
-//        model.addAttribute("username", "visitor");
-//        return "index";
-//    }
-
 }
 

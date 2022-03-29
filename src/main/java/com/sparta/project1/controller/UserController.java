@@ -23,7 +23,6 @@ public class UserController {
     private final SignUpValidator signUpValidator;
     private final UserService userService;
 
-
     // 회원 로그인 페이지
     @GetMapping("/user/login")
     public String login(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -44,7 +43,7 @@ public class UserController {
 
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
-    public String registerUser (@Valid UserRequestDto requestDto, Errors errors, Model model){
+    public String registerUser(@Valid UserRequestDto requestDto, Errors errors, Model model) {
         String message = signUpValidator.getValidMessage(requestDto, errors);
         System.out.println(message);
         if (message.equals("회원가입 성공")) {
@@ -62,4 +61,4 @@ public class UserController {
         return "redirect:/";
     }
 
-    }
+}
