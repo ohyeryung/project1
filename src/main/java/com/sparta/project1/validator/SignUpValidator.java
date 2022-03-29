@@ -44,11 +44,6 @@ public class SignUpValidator {
         return validatorResult;
     }
 
-    //이메일주소 중복 체크
-    public boolean checkEmailDuplicate(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
     //닉네임 중복 체크
     public boolean checkUsernameDuplicate(String username) {
         return userRepository.existsByUsername(username);

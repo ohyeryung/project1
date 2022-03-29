@@ -26,22 +26,14 @@ public class UserController {
 
     // 회원 로그인 페이지
     @GetMapping("/user/login")
-    public String login(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-        System.out.println("1");
-
-
-        if (!userDetails.equals(null)) {
-            System.out.println("2");
+    public String login(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (userDetails != null) {
             model.addAttribute("loggedIn", true);
-            System.out.println("3");
             model.addAttribute("message", "이미 로그인 하셨습니다.");
-            System.out.println("4");
-        } else
-            System.out.println("5");
+        } else {
             model.addAttribute("loggedIn", false);
-        System.out.println("6");
+        }
         return "login";
-
     }
 
     // 회원 가입 페이지

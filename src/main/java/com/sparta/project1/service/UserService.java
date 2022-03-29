@@ -38,12 +38,11 @@ public class UserService {
 
     public void registerUser(UserRequestDto requestDto) {
         String username = requestDto.getUsername();
-        String email = requestDto.getEmail();
 
         //패스워드 암호화
         String password = passwordEncoder.encode(requestDto.getPassword());
 
-        User user = new User(username, password, email);
+        User user = new User(username, password);
         userRepository.save(user);
     }
 
@@ -67,12 +66,10 @@ public class UserService {
             String password = UUID.randomUUID().toString();
             String encodedPassword = passwordEncoder.encode(password);
 
-            // email: kakao email
-            String email = kakaoUserInfo.getEmail();
             // role: 일반 사용자
 //            UserRoleEnum role = UserRoleEnum.USER;
 
-            kakaoUser = new User(nickname, encodedPassword, email, kakaoId);
+            kakaoUser = new User(nickname, encodedPassword, kakaoId);
             userRepository.save(kakaoUser);
         }
 
@@ -137,8 +134,8 @@ public class UserService {
         String email = jsonNode.get("kakao_account")
                 .get("email").asText();
 
-        System.out.println("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
-        return new KakaoUserInfoDto(id, nickname, email);
+        System.out.println("카카오 사용자 정보: " + id + ", " + nickname);
+        return new KakaoUserInfoDto(id, nickname);
     }
 
 }

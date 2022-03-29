@@ -234,11 +234,12 @@
         // 댓글 등록
         function writeComment() {
             let content = $('#content').val();
-
+            let data = {'content':content};
             $.ajax({
                 type: "POST",
-                url: "/api/articles/{id}/comments",
-                data: {'content':content},
+                url: '/api/details/${id}/comments',
+                contentType: "application/json",
+                data: JSON.stringify(data),
                 success: function (){
                     alert("등록 완료!")
                     window.location.reload();

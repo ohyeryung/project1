@@ -26,12 +26,6 @@ public class Article extends Timestamped { // 생성,수정 시간을 자동으�
     @Column(nullable = false)
     private String contents;
 
-    public Article(String title, String name, String contents) {
-        this.title = title;
-        this.name = name;
-        this.contents = contents;
-    }
-
     public Article(ArticleRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.name = requestDto.getName();

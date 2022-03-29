@@ -20,7 +20,4 @@ public class UserRequestDto {
     private String password;
 
     private String password_check;
-
-    private String email;
-
 }

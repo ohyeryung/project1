@@ -16,32 +16,26 @@ public class User {
     private Long id;
 
     // nullable: null 허용 여부
-    // unique: 중복 허용 여부 (false 일때 중복 허용)
     @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String email;
-
     @Column(unique= true)
     private Long kakaoId;
 
     // 일반 로그인
-    public User(String username, String password, String email) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.email = email;
         this.kakaoId = null;
     }
 
     // 카카오 로그인
-    public User(String username, String password, String email, Long kakaoId) {
+    public User(String username, String password, Long kakaoId) {
         this.username = username;
         this.password = password;
-        this.email = email;
         this.kakaoId = kakaoId;
     }
 
