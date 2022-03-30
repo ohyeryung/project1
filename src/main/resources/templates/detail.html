@@ -131,9 +131,16 @@
         //
         // let id = getParameter("id");
 
+
+        $(document).ready(function () {
+            showComment();
+        })
+
         // id 값 불러오기
         let getLink = window.location.search;
         let id = decodeURI(getLink.split('=')[1])
+        // let id1 = decodeURI(getLink.split('=')[1])
+
         listing(id);
 
         function edit(id) {
@@ -148,15 +155,15 @@
         function listing() {
             $.ajax({
                 type: "GET",
-                url: `/api/articles/${id}`,
+                url: `/api/detail/${id}`,
                 data: {},
                 success: function (response) {
-                        let id = response['id'];
-                        let name = response['name'];
-                        let title = response['title'];
-                        let contents = response['contents'];
-                        let modifiedAt = response['modifiedAt'];
-                        addHTML(id, name, title, contents, modifiedAt);
+                    let id = response['id'];
+                    let name = response['name'];
+                    let title = response['title'];
+                    let contents = response['contents'];
+                    let modifiedAt = response['modifiedAt'];
+                    addHTML(id, name, title, contents, modifiedAt);
                 }
             });
         }
@@ -196,13 +203,17 @@
             let title = $('#input_title1').val();
             let contents = $('#input_contents1').val();
 
+            if (title == '' && contents == '') {
+                alert("내용을 입력해주세요.")
+            }
+
             // 전달할 data JSON으로 만듭니다.
-            let data = {'contents': contents, 'title':title};
+            let data = {'contents': contents, 'title': title};
             // PUT /api/articles/{id} 에 data를 전달합니다.
             console.log(data)
             $.ajax({
                 type: "PUT",
-                url: `/api/articles/${id}`,
+                url: `/api/detail/${id}`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -218,40 +229,64 @@
                 type: "DELETE",
                 url: `/api/articles/${id}`,
                 success: function (response) {
-                alert('삭제 완료!');
-                window.location.href = '/'
-            }
+                    alert('삭제 완료!');
+                    window.location.href = '/'
+                }
             })
         }
 
         // 댓글 등록
         function writeComment() {
             let content = $('#content').val();
-            let data = {'content':content};
+            let username = $('#username').val();
+            let data = {'content': content, 'writer':username ,'articleId':id};
+            if (content == '') {
+                alert("내용을 입력해주세요.")
+            }
             $.ajax({
                 type: "POST",
-                url: `/api/details/${id}/comments`,
+                url: `/api/detail/${id}/comments`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function (response){
+                success: function (response) {
                     alert("등록 완료!")
-                    let id = response.id;
-                    let username = response.writer;
-                    let content = response.content;
-                    let modifiedAt = response.modifiedAt;
-                    let temp_html = `<tr>
-                                        <th scope="col" >${id}</th>
-                                        <td id="${id}-content" >${content}</td>
-                                        <td id="${id}-username" >${username}</td>
-                                        <td>${modifiedAt}</td>
-                                        <th><button onclick="edit_comment('${id}')" class="btn btn-secondary" id="edit_commentbtn" >수정</button></th>
-                                        <th><button onclick="del_comment('${id}')" class="btn btn-secondary" id="del_commentbtn" >삭제</button></th>
-                                    </tr>`;
-                    $('#comment-list').append(temp_html);
+                    window.location.reload();
                 }
             });
-
         }
+
+        //
+        // // 댓글 보여주기
+        function showComment() {
+            $.ajax({
+                type: "GET",
+                url: `/api/detail/${id}/comments`,
+                success: function (response) {
+                    console.log(response)
+                    for (let i = 0; i < response.length; i++) {
+                        let id = response.id;
+                        let username = response.writer;
+                        let content = response.content;
+                        let modifiedAt = response.modifiedAt;
+                        add_html(id, username, content, modifiedAt);
+
+                    }
+                }
+            });
+        }
+
+        function add_html(id, username, content, modifiedAt) {
+            let temp_html = `<tr>
+                                <th scope="col" >${id}</th>
+                                <td id="${id}-content" >${content}</td>
+                                <td id="${id}-username" >${username}</td>
+                                <td>${modifiedAt}</td>
+                                <th><button onclick="edit_comment('${id}')" class="btn btn-secondary" id="edit_commentbtn" >수정</button></th>
+                                <th><button onclick="del_comment('${id}')" class="btn btn-secondary" id="del_commentbtn" >삭제</button></th>
+                            </tr>`;
+            $('#comment-list').append(temp_html);
+        }
+
 
         function edit_comment() {
             $('#edit-box').hide();
@@ -267,7 +302,7 @@
             console.log(data)
             $.ajax({
                 type: "PUT",
-                url: `/api/comments/${id}`,
+                url: `/api/detail/${id}/comments/${id1}`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -280,10 +315,10 @@
 
         // 댓글 삭제
         function del_comment() {
-            if(confirm("삭제 하시겠습니까?")) {
+            if (confirm("삭제 하시겠습니까?")) {
                 $.ajax({
                     type: "DELETE",
-                    url: `/api/comments/${id}`,
+                    url: `/api/detail/${id}/comments`,
                     success: function (response) {
                         alert('삭제 완료!');
                         window.location.reload();
@@ -302,68 +337,70 @@
 </head>
 
 <body>
-    <div class="mytitle" >
-        <h1>항해 블로그 🚢⚓</h1>
-        <button style="display: inline-block;" onclick="window.location.href = '/'"() class="btn btn-secondary btn-sm" >HOME</button>
+<div class="mytitle">
+    <h1>항해 블로그 🚢⚓</h1>
+    <button style="display: inline-block;" onclick="window.location.href = '/'" () class="btn btn-secondary btn-sm">
+        HOME
+    </button>
+</div>
+
+<!--게시글 보여주기-->
+<div class="wrap" id="post-box">
+
+</div>
+
+<!--게시글 수정-->
+<div class="mypost" id="edit-box" style="display: none;">
+    <div class="form-floating mb-3">
+        <label for="floatingInput">제목</label>
+        <input type="text" class="form-control" id="input_title1" placeholder="제목">
     </div>
-
-    <!--게시글 보여주기-->
-    <div class="wrap" id="post-box" >
-
+    <div class="form-floating">
+        <label for="floatingTextarea">내용</label>
+        <textarea class="form-control" placeholder="내용을 입력해주세요." id="input_contents1"
+                  style="height: 70px"></textarea>
     </div>
-
-    <!--게시글 수정-->
-    <div class="mypost" id="edit-box" style="display: none;">
-        <div class="form-floating mb-3">
-            <label for="floatingInput">제목</label>
-            <input type="text" class="form-control" id="input_title1" placeholder="제목">
-        </div>
-        <div class="form-floating">
-            <label for="floatingTextarea">내용</label>
-                <textarea class="form-control" placeholder="내용을 입력해주세요." id="input_contents1"
-                          style="height: 70px"></textarea>
-        </div>
-        <div class="mybtns">
-            <button onclick="submit()" class="btn btn-secondary" id="edit_btn1" >완료</button>
-            <button onclick="back()" class="btn btn-secondary" id="mybtn1" >돌아가기</button>
-        </div>
+    <div class="mybtns">
+        <button onclick="submit()" class="btn btn-secondary" id="edit_btn1">완료</button>
+        <button onclick="back()" class="btn btn-secondary" id="mybtn1">돌아가기</button>
     </div>
+</div>
 
-    <!--댓글 등록-->
-    <div id="comment-box">
-        <div action="/api/articles/{id}/comments" method="post" autocomplete="off" class="form-floating mb-3">
-            <textarea id="content" class="form-control" style="height: 60px;" placeholder="댓글을 입력해주세요!"></textarea>
-            <button onclick="writeComment()" id="commentBtn" class="btn btn-secondary" >입력</button>
-        </div>
+<!--댓글 등록-->
+<div id="comment-box">
+    <div action="/api/articles/{id}/comments" method="post" autocomplete="off" class="form-floating mb-3">
+        <textarea id="content" class="form-control" style="height: 60px;" placeholder="댓글을 입력해주세요!"></textarea>
+        <button onclick="writeComment()" id="commentBtn" class="btn btn-secondary">입력</button>
     </div>
+</div>
 
-    <!--댓글 목록-->
-    <table class="table" id="comment-list">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">내용</th>
+<!--댓글 목록-->
+<table class="table" id="comment-list">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">내용</th>
 
-            <th scope="col">작성자</th>
-            <th scope="col">작성날짜</th>
-            <th>
-<!--                <button onclick="edit_comment(id)" class="btn btn-secondary" id="edit_commentbtn">수정</button>-->
-<!--            </th>-->
-<!--            <th>-->
-<!--                <button onclick="del_comment(id)" class="btn btn-secondary" id="del_commentbtn">삭제</button>-->
-<!--            </th>-->
-        </tr>
-        </thead>
-        <tbody id="list">
-        </tbody>
-    </table>
+        <th scope="col">작성자</th>
+        <th scope="col">작성날짜</th>
+        <th>
+            <!--                <button onclick="edit_comment(id)" class="btn btn-secondary" id="edit_commentbtn">수정</button>-->
+            <!--            </th>-->
+            <!--            <th>-->
+            <!--                <button onclick="del_comment(id)" class="btn btn-secondary" id="del_commentbtn">삭제</button>-->
+            <!--            </th>-->
+    </tr>
+    </thead>
+    <tbody id="list">
+    </tbody>
+</table>
 
-    <!--댓글 수정-->
-    <div id="edit-comment" style="display: none; width: 700px; margin:100px auto auto auto;">
-        <textarea id="edit-content" class="form-control" style="height: 60px;" placeholder="댓글을 입력해주세요!"></textarea>
-        <button onclick="submit_comment(id)" id="submit-commentbtn" class="btn btn-secondary">완료</button>
-        <button type="reset" onclick="back_detail()" id="reset-commentbtn" class="btn btn-secondary">취소</button>
-    </div>
+<!--댓글 수정-->
+<div id="edit-comment" style="display: none; width: 700px; margin:100px auto auto auto;">
+    <textarea id="edit-content" class="form-control" style="height: 60px;" placeholder="댓글을 입력해주세요!"></textarea>
+    <button onclick="submit_comment(id)" id="submit-commentbtn" class="btn btn-secondary">완료</button>
+    <button type="reset" onclick="back_detail()" id="reset-commentbtn" class="btn btn-secondary">취소</button>
+</div>
 </body>
 
 </html>

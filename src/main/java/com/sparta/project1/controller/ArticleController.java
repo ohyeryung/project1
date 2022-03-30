@@ -37,7 +37,7 @@ public class ArticleController {
 
 
     // 상세 페이지
-    @GetMapping("/api/articles/{id}")
+    @GetMapping("/api/detail/{id}")
     public Article goDetail(@PathVariable Long id) {
         return articleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException()
@@ -45,14 +45,14 @@ public class ArticleController {
     }
 
     // 게시글 수정하기
-    @PutMapping("/api/articles/{id}")
+    @PutMapping("/api/detail/{id}")
     public Long updateArticle(@PathVariable Long id, @RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         requestDto.setName(userDetails.getUsername());
         return articleService.update(id, requestDto);
     }
 
     // 게시글 삭제하기
-    @DeleteMapping("/api/articles/{id}")
+    @DeleteMapping("/api/detail/{id}")
     public Long deleteArticle(@PathVariable Long id) {
         articleRepository.deleteById(id);
         return id;

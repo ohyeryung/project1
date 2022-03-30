@@ -13,12 +13,15 @@ import javax.transaction.Transactional;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    @Transactional
+    // 댓글 수정
+   @Transactional
         public Long update(Long id, CommentRequestDto requestDto) {
         Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("존재하지 않는 댓글입니다."));
+                () -> new NullPointerException("존재하지 않는 아이디입니다."));
 
        comment.update(requestDto);
        return comment.getId();
     }
+
+
 }

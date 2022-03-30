@@ -13,8 +13,11 @@ import javax.persistence.*;
 @Entity
 public class Comment extends Timestamped{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private Long articleId;
 
     @Column(nullable = false)
     private String content;
@@ -23,12 +26,13 @@ public class Comment extends Timestamped{
     private String writer;
 
     @Column(nullable = false)
-    private Long articleId;
+    private Long userId;
 
-    public Comment(CommentRequestDto requestDto) {
+    public Comment(CommentRequestDto requestDto, Long userId) {
         this.content = requestDto.getContent();
         this.writer = requestDto.getWriter();
         this.articleId = requestDto.getArticleId();
+        this.userId = userId;
     }
 
     public void update(CommentRequestDto requestDto) {
