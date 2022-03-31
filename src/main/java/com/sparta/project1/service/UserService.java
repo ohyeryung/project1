@@ -66,8 +66,6 @@ public class UserService {
             String password = UUID.randomUUID().toString();
             String encodedPassword = passwordEncoder.encode(password);
 
-            // role: 일반 사용자
-//            UserRoleEnum role = UserRoleEnum.USER;
 
             kakaoUser = new User(nickname, encodedPassword, kakaoId);
             userRepository.save(kakaoUser);
@@ -89,7 +87,7 @@ public class UserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "7e0438e611271f9ad5a6a62b3fa7463b");
-        body.add("redirect_uri", "http://localhost:8080/user/kakao/callback");
+        body.add("redirect_uri", "http://yeryung.shop/user/kakao/callback");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -131,8 +129,6 @@ public class UserService {
         Long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
-        String email = jsonNode.get("kakao_account")
-                .get("email").asText();
 
         System.out.println("카카오 사용자 정보: " + id + ", " + nickname);
         return new KakaoUserInfoDto(id, nickname);
