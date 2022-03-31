@@ -1,4 +1,6 @@
-<html lang="en">
+<html lang="en", xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -160,7 +162,6 @@
                             <td>${modifiedAt}</td>
                         </tr>`;
             // 2. #list 에 HTML을 붙인다.
-            console.log(tempHtml)
             $('#list').append(tempHtml);
         }
 
@@ -192,7 +193,7 @@
 </div>
     <div class="mytitle">
         <h1>항해 블로그 🚢⚓</h1>
-        <button onclick="open_box()">글 작성하기</button>
+        <th:block sec:authorize="hasRole('MEMBER')"><button onclick="open_box()">글 작성하기</button></th:block>
     </div>
     <div class="mypost" id="post-box" style="display: none;">
 <!--        <div class="form-floating mb-3">-->
