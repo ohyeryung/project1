@@ -139,7 +139,8 @@
         // id 값 불러오기
         let getLink = window.location.search;
         let id = decodeURI(getLink.split('=')[1])
-        // let id1 = decodeURI(getLink.split('=')[1])
+
+
 
         listing(id);
 
@@ -225,23 +226,27 @@
 
         // 게시글 삭제
         function del() {
-            $.ajax({
-                type: "DELETE",
-                url: `/api/articles/${id}`,
-                success: function (response) {
-                    alert('삭제 완료!');
-                    window.location.href = '/'
-                }
-            })
+            if (confirm("삭제 하시겠습니까?")) {
+                $.ajax({
+                    type: "DELETE",
+                    url: `/api/articles/${id}`,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        alert('삭제 완료!');
+                        window.location.href = '/'
+                    }
+                })
+            }
         }
 
         // 댓글 등록
         function writeComment() {
             let content = $('#content').val();
-            let username = $('#username').val();
-            let data = {'content': content, 'writer':username ,'articleId':id};
+            let data = {'content': content, 'articleId':id};
             if (content == '') {
                 alert("내용을 입력해주세요.")
+                return false;
             }
             $.ajax({
                 type: "POST",
@@ -255,7 +260,6 @@
             });
         }
 
-        //
         // // 댓글 보여주기
         function showComment() {
             $.ajax({
@@ -264,10 +268,10 @@
                 success: function (response) {
                     console.log(response)
                     for (let i = 0; i < response.length; i++) {
-                        let id = response.id;
-                        let username = response.writer;
-                        let content = response.content;
-                        let modifiedAt = response.modifiedAt;
+                        let id = response[i].id;
+                        let username = response[i].writer;
+                        let content = response[i].content;
+                        let modifiedAt = response[i].modifiedAt;
                         add_html(id, username, content, modifiedAt);
 
                     }
@@ -298,11 +302,17 @@
         // 댓글 수정
         function submit_comment() {
             let edit_content = $('#edit-content').val();
+            if(edit_content == '') {
+                alert("내용을 입력해주세요.")
+                $('#edit-content').focus();
+            } else {
+
+            }
             let data = {'edit_content': edit_content};
             console.log(data)
             $.ajax({
                 type: "PUT",
-                url: `/api/detail/${id}/comments/${id1}`,
+                url: `/api/detail/${id}/comments`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -398,7 +408,7 @@
 <!--댓글 수정-->
 <div id="edit-comment" style="display: none; width: 700px; margin:100px auto auto auto;">
     <textarea id="edit-content" class="form-control" style="height: 60px;" placeholder="댓글을 입력해주세요!"></textarea>
-    <button onclick="submit_comment(id)" id="submit-commentbtn" class="btn btn-secondary">완료</button>
+    <button onclick="submit_comment()" id="submit-commentbtn" class="btn btn-secondary">완료</button>
     <button type="reset" onclick="back_detail()" id="reset-commentbtn" class="btn btn-secondary">취소</button>
 </div>
 </body>
